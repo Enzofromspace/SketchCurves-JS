@@ -11,10 +11,13 @@ let points;
 const sketch = ({ canvas }) => {
   points = [
     new Point({ x:200, y:540 }),
-    new Point({ x:400, y:300, control: true }),
-    new Point({ x:800, y:540 }),
+    new Point({ x:400, y:700 }),
+    new Point({ x:880, y:540 }),
+    new Point({ x:600, y:700 }),
+    new Point({ x:640, y:900 }),
   ];
 
+  //add event listener and added event handlers (mousedown called when event happens)
   canvas.addEventListener('mousedown', onMouseDown);
 
   elCanvas = canvas;
@@ -23,11 +26,28 @@ const sketch = ({ canvas }) => {
     context.fillStyle = 'white';
     context.fillRect(0, 0, width, height);
 
+    /*
+    context.strokeStyle = '#999';
     context.beginPath();
     context.moveTo(points[0].x, points[0].y);
-    context.quadraticCurveTo(points[1].x, points[1].y, points[2].x, points[2].y);
+    
+    for(let i = 1; i < points.length; i ++ ) {
+      context.lineTo(points[i].x, points[i].y);
+    }
     context.stroke();
 
+    context.beginPath();
+    context.moveTo(points[0].x, points[0].y);
+    
+    for(let i = 1; i < points.length; i +=2 ) {
+      context.quadraticCurveTo(points[i + 0].x, points[i + 0].y, points[i + 1].x, points[i + 1].y);
+    }
+    */
+    context.stroke();
+/*Old way to set points replaced by for loop
+    context.quadraticCurveTo(points[1].x, points[1].y, points[2].x, points[2].y);
+    context.quadraticCurveTo(points[3].x, points[3].y, points[4].x, points[4].y);
+*/
     points.forEach(point => {
       point.draw(context);
     });
@@ -37,7 +57,7 @@ const sketch = ({ canvas }) => {
 const onMouseDown = (e) => {
   window.addEventListener('mousemove', onMouseMove);
   window.addEventListener('mouseup', onMouseUp);
-
+  // calc location of cursor based on scale of canvas
   const x = (e.offsetX / elCanvas.offsetWidth) * elCanvas.width;
   const y = (e.offsetY / elCanvas.offsetHeight) * elCanvas.height;
 

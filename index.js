@@ -8,11 +8,11 @@ const settings = {
 let elCanvas;
 let points;
 
-const sketch = ({canvas}) => {
+const sketch = ({ canvas }) => {
   points = [
-    new Point({x:200,y:540}),
-    new Point({x:400, y:300, control: true}),
-    new Point({x:800,y:540}),
+    new Point({ x:200, y:540 }),
+    new Point({ x:400, y:300, control: true }),
+    new Point({ x:800, y:540 }),
   ];
 
   canvas.addEventListener('mousedown', onMouseDown);
@@ -41,24 +41,21 @@ const onMouseDown = (e) => {
   const x = (e.offsetX / elCanvas.offsetWidth) * elCanvas.width;
   const y = (e.offsetY / elCanvas.offsetHeight) * elCanvas.height;
 
-  
-  points.forEach(point =>{
-    point.isDragging = point.hitTest(x,y);
+  points.forEach(point => {
+    point.isDragging = point.hitTest(x, y);
   });
-
 };
 
 const onMouseMove = (e) => {
   const x = (e.offsetX / elCanvas.offsetWidth) * elCanvas.width;
   const y = (e.offsetY / elCanvas.offsetHeight) * elCanvas.height;
 
-  points.forEach(point =>{
+  points.forEach(point => {
     if (point.isDragging) {
       point.x = x;
       point.y = y;
     }
   });
-  
 };
 
 const onMouseUp = () => {
@@ -69,11 +66,12 @@ const onMouseUp = () => {
 canvasSketch(sketch, settings);
 
 class Point {
-  constructor({x,y,control = false}){
+  constructor({ x,y, control = false }){
     this.x = x;
     this.y = y;
     this.control = control;
   }
+  
   draw(context){
     context.save();
     context.translate(this.x, this.y);
@@ -86,7 +84,7 @@ class Point {
     context.restore();
   }
 
-  hitTest(x,y){
+  hitTest(x,y) {
     const dx = this.x - x;
     const dy = this.y - y;
     const dd = Math.sqrt(dx * dx + dy * dy);
